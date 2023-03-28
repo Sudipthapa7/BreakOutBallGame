@@ -4,28 +4,27 @@
  */
 package breakoutball;
 
-/**
- *
- * @author HP
- */
+
 public class BricksModel {
-      private final int BRICK_WIDTH = 60;
-      private final int BRICK_HEIGHT = 20;
+      private int BRICK_WIDTH = 60;
+      private int BRICK_HEIGHT = 20;
       private boolean destroyed;
-      BricksModel(){
+      
+      
+      public BricksModel(){
           destroyed = false;
       }
       
-      void setDestroyed(boolean d){
+      public void setDestroyed(boolean d){
           destroyed = d;
       }
-      boolean isDestroyed(){
+     public boolean isDestroyed(){
           return destroyed;
       }
-      int getBrickWidth(){
+     public int getBrickWidth(){
           return BRICK_WIDTH;
       }
-      int getBrickHeight(){
+     public  int getBrickHeight(){
           return BRICK_HEIGHT;
       }
 }

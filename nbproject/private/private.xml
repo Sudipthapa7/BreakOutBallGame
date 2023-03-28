@@ -4,10 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/BreakOutBall/src/breakoutball/PlayGame.java</file>
-            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/BreakOutBall/src/breakoutball/GameHowToPlay.java</file>
-            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/BreakOutBall/src/breakoutball/ScoreBoard.java</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/BreakOutBall/src/welcome/SecondPage.java</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/BreakOutBall/src/breakout_ball_levels/GameBoard.java</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/BreakOutBall/src/breakout_ball_levels/GameLevel_1.java</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/BreakOutBall/src/breakout_ball_levels/GameLevel.java</file>
             <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/BreakOutBall/src/breakoutball/BreakOutBall.java</file>
-            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/BreakOutBall/src/breakoutball/GameSetting.java</file>
+            <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/BreakOutBall/src/welcome/FirstPage.java</file>
             <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/BreakOutBall/src/breakoutball/BricksModel.java</file>
             <file>file:/C:/Users/HP/OneDrive/Documents/NetBeansProjects/BreakOutBall/src/breakoutball/GameDraw.java</file>
         </group>

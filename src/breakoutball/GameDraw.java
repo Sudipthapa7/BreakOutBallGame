@@ -180,7 +180,7 @@ public final class GameDraw extends JPanel implements KeyListener,ActionListener
     } 
    void restartGame(){
        PlayGame p = new PlayGame();
-       p.startGame();
+       p.startGame(1);
    }
 }  
     
