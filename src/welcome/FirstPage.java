@@ -25,8 +25,8 @@ public final class FirstPage extends JFrame implements ActionListener{
 //         addVideoGif();
          addBackButton();
          addNextButton();
+           addLogo();
          addImage();
-         addLogo();
         this.setVisible(true);
        
     }
