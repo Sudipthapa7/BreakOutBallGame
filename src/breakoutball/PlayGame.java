@@ -1,9 +1,8 @@
-/*
+  /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package breakoutball;
-import welcome.SecondPage;
 import breakout_ball_levels.GameBoard;
 import breakout_ball_levels.GameLevel_1;
 import breakout_ball_levels.GameLevel_2;
@@ -22,7 +21,6 @@ import javax.swing.Timer;
  */
 public class PlayGame extends JFrame implements KeyListener,ActionListener{
     Timer timer;
-    int Score;
     ScoreBoard score;
     GameBoard gameBoard;
     int PLAYING_WIDTH = 900;
@@ -56,9 +54,6 @@ public class PlayGame extends JFrame implements KeyListener,ActionListener{
        timer.start();
     }
    
-    void scoreCount(){
-        
-    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -80,18 +75,27 @@ public class PlayGame extends JFrame implements KeyListener,ActionListener{
         gameBoard.checkAndMoveBall();
        // gameBoard.checkBrickDestroyed();
         
-        if(gameBoard.isGameOver()){
+        if(gameBoard.isGameOver()==-1){
             timer.stop();
             this.dispose();
-            
             SwingUtilities.invokeLater(new Runnable(){
                    public void run(){    
-                        PlayGame playGame = new PlayGame();
-                        playGame.startGame(1);
+                        NewGame ng = new NewGame(gameBoard.getLevel());
+                        
                    }
             });
             
             
+        }
+        else if(gameBoard.isGameOver()==1){
+            timer.stop();
+            this.dispose();
+            SwingUtilities.invokeLater(new Runnable(){
+                   public void run(){    
+                        LevelCompleted completed = new LevelCompleted(gameBoard.getLevel());
+                        
+                   }
+            });
         }
        else
             gameBoard.repaint();
