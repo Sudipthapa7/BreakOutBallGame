@@ -56,7 +56,7 @@ public final class BreakOutBall  {
         
     }
     static void playBackgroundMusic(){
-       File musicFile = new File("Res/audio_2.wav");
+       File musicFile = new File("Res/Music_BreakOutBall.wav");
       try{
           //hello
         if(musicFile.exists()){
