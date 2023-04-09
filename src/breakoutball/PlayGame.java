@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -21,12 +22,14 @@ import javax.swing.Timer;
  */
 public class PlayGame extends JFrame implements KeyListener,ActionListener{
     Timer timer;
-    ScoreBoard score;
+    ScoreBoard scoreBoard;
     GameBoard gameBoard;
     int PLAYING_WIDTH = 900;
     int PLAYING_HEIGHT = 950;
+    boolean paused;
     
    public PlayGame(){
+  
        this.setSize(PLAYING_WIDTH,PLAYING_HEIGHT);
        this.setLayout(null);
        this.getContentPane().setBackground(Color.WHITE);
@@ -36,9 +39,10 @@ public class PlayGame extends JFrame implements KeyListener,ActionListener{
     }
    
    public void startGame(int level){
+       paused = false;
        //adding Score Board
-       score = new ScoreBoard();
-       this.add(score);
+       scoreBoard = new ScoreBoard();
+       this.add(scoreBoard);
        this.setVisible(true);
        //adding game background
        gameBoard = new GameBoard();
@@ -50,7 +54,7 @@ public class PlayGame extends JFrame implements KeyListener,ActionListener{
        
        gameBoard.addKeyListener(this);
        this.add(gameBoard);   
-       timer = new Timer(5,this);
+       timer = new Timer(6,this);
        timer.start();
     }
    
@@ -62,6 +66,17 @@ public class PlayGame extends JFrame implements KeyListener,ActionListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
+          if(e.getKeyCode()==KeyEvent.VK_SPACE){
+              if(!paused){
+                  timer.stop();
+                  paused = true;
+                   JOptionPane.showMessageDialog(null, "Game Paused, press Space to Restart ");
+                    timer.start();
+                    paused = false;
+              } 
+
+          }
+        
           gameBoard.checkAndMovePaddle(e);
     }
 
@@ -74,25 +89,25 @@ public class PlayGame extends JFrame implements KeyListener,ActionListener{
     public void actionPerformed(ActionEvent e) {
         gameBoard.checkAndMoveBall();
        // gameBoard.checkBrickDestroyed();
-        
-        if(gameBoard.isGameOver()==-1){
+        int check = gameBoard.isGameOver();
+        if(check==-1){
             timer.stop();
             this.dispose();
             SwingUtilities.invokeLater(new Runnable(){
                    public void run(){    
-                        NewGame ng = new NewGame(gameBoard.getLevel());
+                        NewGame ng = new NewGame(gameBoard.getLevel(),gameBoard.score);
                         
                    }
             });
             
             
         }
-        else if(gameBoard.isGameOver()==1){
+        else if(check==1){
             timer.stop();
             this.dispose();
             SwingUtilities.invokeLater(new Runnable(){
                    public void run(){    
-                        LevelCompleted completed = new LevelCompleted(gameBoard.getLevel());
+                        LevelCompleted completed = new LevelCompleted(gameBoard.getLevel(),gameBoard.score);
                         
                    }
             });
