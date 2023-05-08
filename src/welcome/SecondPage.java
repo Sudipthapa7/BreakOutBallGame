@@ -1,7 +1,8 @@
-
 package welcome;
-
 import breakoutball.PlayGame;
+import breakoutball.GameSetting;
+import breakoutball.Profile;
+import breakoutball.Help;
 import java.awt.Color;
 import static java.awt.Color.WHITE;
 import java.awt.Font;
@@ -13,13 +14,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 /**
  *
- * @author HP
+ * @author Team Greenary
  */
 public final class SecondPage extends JFrame implements ActionListener, MouseListener{
-    JButton ProfileButton;
     JButton SettingButton;
     JButton HelpButton;
     JButton ExitButton;
@@ -27,7 +26,7 @@ public final class SecondPage extends JFrame implements ActionListener, MouseLis
     JLabel LevelTwo;
     JLabel LevelThree;
     JButton BackButton;
-    SecondPage()
+   public SecondPage()
     {
         this.setSize(900, 900);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,7 +35,6 @@ public final class SecondPage extends JFrame implements ActionListener, MouseLis
         this.setLayout(null);
         this.getContentPane().setBackground(WHITE);
         addLogo();
-        addProfileButton();
         addSettingButton();
         addHelpButton();
         addExitButton();
@@ -60,17 +58,7 @@ public final class SecondPage extends JFrame implements ActionListener, MouseLis
         logo.setBounds(20,20,64,68);
         this.add(logo);
     }
-    public void addProfileButton()
-    {
-        ProfileButton = new JButton("Profile");
-        ProfileButton.setLayout(null);
-        ProfileButton.setBorder(null);
-        ProfileButton.setBounds(360, 170, 170, 70);
-        ProfileButton.setFont(new Font("Sans",Font.PLAIN,40));
-        ProfileButton.setForeground(Color.BLUE);
-        ProfileButton.addActionListener(this);
-        this.add(ProfileButton);
-    }
+ 
     public void addSettingButton()
     {
         SettingButton = new JButton("Setting");
@@ -80,6 +68,8 @@ public final class SecondPage extends JFrame implements ActionListener, MouseLis
         SettingButton.setFont(new Font("Sans",Font.PLAIN,40));
         SettingButton.setForeground(Color.BLUE);
         SettingButton.addActionListener(this);
+        SettingButton.addMouseListener(this);
+
         this.add(SettingButton);
     }
     public void addHelpButton()
@@ -91,6 +81,8 @@ public final class SecondPage extends JFrame implements ActionListener, MouseLis
         HelpButton.setFont(new Font("Sans",Font.PLAIN,40));
         HelpButton.setForeground(Color.BLUE);
         HelpButton.addActionListener(this);
+        HelpButton.addMouseListener(this);
+
         this.add(HelpButton);
     }
     public void addExitButton()
@@ -102,6 +94,8 @@ public final class SecondPage extends JFrame implements ActionListener, MouseLis
         ExitButton.setFont(new Font("Sans",Font.PLAIN,40));
         ExitButton.setForeground(Color.BLUE);
         ExitButton.addActionListener(this);
+        ExitButton.addMouseListener(this);
+
         this.add(ExitButton);
     }
     public void addLabel_1()
@@ -137,6 +131,7 @@ public final class SecondPage extends JFrame implements ActionListener, MouseLis
         LevelThree.setBackground(WHITE);
         LevelThree.setOpaque(true);
         LevelThree.setFont(new Font("Sans",Font.PLAIN,50));
+        LevelThree.addMouseListener(this);
         this.add(LevelThree);
     }
      public void addBackButton()
@@ -167,32 +162,41 @@ public final class SecondPage extends JFrame implements ActionListener, MouseLis
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        PlayGame playgame = new PlayGame();
+       
         if(e.getSource()== LevelOne)
-        {
+        {  PlayGame playgame = new PlayGame();
             this.dispose();
             playgame.startGame(1);
         }
-        if(e.getSource()==LevelTwo){
+        else if(e.getSource()==LevelTwo){
+             PlayGame playgame = new PlayGame();
             this.dispose();
             playgame.startGame(2);
         }
+        else if(e.getSource()==LevelThree){
+             PlayGame playgame = new PlayGame();
+            this.dispose();
+           playgame.startGame(3);
+        }
+        else if(e.getSource() == SettingButton){
+            this.dispose();
+            GameSetting g = new GameSetting();
+        }
+       else if(e.getSource() == HelpButton){
+            this.dispose();
+            Help f = new Help();
+        }
     }
-
     @Override
     public void mousePressed(MouseEvent e) {
     }
-
     @Override
     public void mouseReleased(MouseEvent e) {
     }
-
     @Override
     public void mouseEntered(MouseEvent e) {
     }
-
     @Override
     public void mouseExited(MouseEvent e) {
     }
-    
 }

@@ -5,35 +5,53 @@ import breakoutball.BricksModel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author HP
- */
+ * @author @Team Greenary
+ * */
 public class GameLevel_1 extends GameLevel {
-    int BRICK_ROW = 8;
-    int BRICK_COLUMN = 12;
+    int BRICK_ROW = 6;
+    int BRICK_COLUMN = 7;
     private int ballMotionY = 5;
     private int ballMotionX = 5;
-//    int Score = 0;
-    
-    
+    int totalSpeed = 10;
+    int speed = 5;
+    Rectangle ball;
+    Rectangle paddle;
+    Scanner sc;
+    File file;
    public GameLevel_1(){
-        BRICK_HEIGHT = 20;
-        BRICK_WIDTH = 60;
+        gameScore = BRICK_ROW*BRICK_COLUMN;
+        BRICK_HEIGHT = 30;
+        BRICK_WIDTH = 100;
         bricks = new ArrayList<>();
-        for(int i=0;i<8;i++){
+        for(int i=0;i<BRICK_ROW;i++){
             List<BricksModel> brick = new ArrayList<>();
-            for(int j=0;j<12;j++)
+            for(int j=0;j<BRICK_COLUMN;j++)
                 brick.add(new BricksModel());
           bricks.add(brick);
-        }
+        } 
     }
-    
-    void startDrawing(){
-        
+    public void readSetting(){
+         try{
+             file = new File("setting.txt");
+             sc = new Scanner(file);
+             if(sc.hasNext()) sc.nextLine();
+             if(sc.hasNext()) sc.nextLine();
+             if(sc.hasNext()) 
+              totalSpeed = Integer.parseInt(sc.nextLine());
+            speed = totalSpeed/2;
+            ballMotionY = speed;
+            ballMotionX = speed;
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+        }
     }
     @Override
     public void drawBricks(Graphics g) {
@@ -41,68 +59,64 @@ public class GameLevel_1 extends GameLevel {
             for(int j=0;j<BRICK_COLUMN;j++){
                 if(!bricks.get(i).get(j).isDestroyed()){
                        g.setColor(Color.blue);
-                       g.fillRect((60+(j*65)), (150+(i*25)), BRICK_WIDTH, BRICK_HEIGHT);   
+                       g.fillRect((50+(j*115)), (150+(i*40)), BRICK_WIDTH, BRICK_HEIGHT);   
                   } 
             }
         }
     }
      public int checkBrickDestroyed(int ballXpos,int ballYpos) {
          int flag = 0;
-        for(int i=0;i<8;i++){
-            for(int j=0;j<12;j++){
+        for(int i=0;i<BRICK_ROW;i++){
+            for(int j=0;j<BRICK_COLUMN;j++){
                 if(!bricks.get(i).get(j).isDestroyed()){
-                 Rectangle brick = new Rectangle((60+(j*65)), (i*25+150), BRICK_WIDTH, BRICK_HEIGHT);
+                 Rectangle brick = new Rectangle((50+(j*115)), (i*40+150), BRICK_WIDTH, BRICK_HEIGHT);
                  Rectangle ball = new Rectangle(ballXpos,ballYpos,20,20);
                  if(brick.intersects(ball)){
                      flag = 1;
                      bricks.get(i).get(j).setDestroyed(true);
-                     if((ballXpos) < (60+(j*65)) || (ballXpos) >= (60+(j*65)+BRICK_WIDTH)){
+                     if((ballXpos) < (50+(j*115)) || (ballXpos) >= (50+(j*115)+BRICK_WIDTH)){
                           ballMotionX =-ballMotionX;
                      }
                      else{
                         ballMotionY =-ballMotionY;
                      }
-                }
-                     
+                      return flag;
+                }           
                 }
             }   
         }
         return flag;
     } 
-    public int[] checkAndMoveBall(int ballXpos,int ballYpos,int paddleXpos){
+    @Override
+     public int[] checkAndMoveBall(int ballXpos,int ballYpos,int paddleXpos){
         ballXpos +=ballMotionX;
-        ballYpos +=ballMotionY;
+        ballYpos +=ballMotionY;//main thing for return ball Y direction
         if(ballXpos<=0||ballXpos>860){
             ballMotionX =-ballMotionX;
         }
         if(ballYpos<=100)
             ballMotionY =-ballMotionY;
         Rectangle ball = new Rectangle(ballXpos,ballYpos,20,20);
-        Rectangle paddle = new Rectangle(paddleXpos,700,200,10);
+         paddle = new Rectangle(paddleXpos,850,200,10);
         if(paddle.intersects(ball)){
-//              if((paddle.x+160)<ball.x)
-//              ballMotionX = 5;
-//              else if((paddle.x+130)<ball.x)
-//                  ballMotionX = 4;
-//              else if((paddle.x+110)<ball.x)
-//                  ballMotionX = 2;
-//              else if((paddle.x+100)<=ball.x||(paddle.x+90)<=ball.x)
-//                  ballMotionX = 0;
-//              else if((paddle.x+80)<ball.x) 
-//                  ballMotionX = -2;
-//              else if((paddle.x+60)<ball.x)
-//                  ballMotionX = -4;
-//              else 
-//                  ballMotionX = -5;
+              if((paddle.x+120)<ball.x)
+                  ballMotionX = speed;
+              else if((paddle.x+120)<=ball.x||(paddle.x+70)<=ball.x)
+                  ballMotionX = 0;
+              else 
+                  ballMotionX = -speed;
+              if(ballMotionY>0)
+              ballMotionY = totalSpeed - Math.abs(ballMotionX);
+              else
+              {
+                  ballMotionY =  Math.abs(ballMotionX);
+                 // ballMotionY =-ballMotionY;
+              }
               ballMotionY =-ballMotionY;
-              System.out.println("paddle cordinate "+paddle.getBounds());
-              System.out.println("Ball cordinate "+ball.getBounds());
-              System.out.println("-----------------------------------------------------");
-        } 
+        }  
          int flag = checkBrickDestroyed(ballXpos,ballYpos);
             int [] pos = {ballXpos,ballYpos,flag};
             return pos;
-      
   } 
 
     @Override
@@ -111,10 +125,14 @@ public class GameLevel_1 extends GameLevel {
     }
 
     @Override
-    public void setBallMotionY(int motion) {
-           ballMotionY = -ballMotionY;
+    public void setBallMotionY(int motion) {   
+            ballMotionY = -ballMotionY;
     }
-      
+
+    @Override
+    public int getPassingScore() {
+        return gameScore;
+    }
 }  
     
 
